@@ -1,1 +1,1 @@
-# connfy-app
+# Confy App
