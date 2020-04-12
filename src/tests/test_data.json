@@ -287,12 +287,12 @@
   {
    "name": "Paraninfo",
    "url": "https://pycones19.sched.com/overview/type/Paraninfo?iframe=yes&w=100%&sidebar=yes&bg=no",
-   "color": "blue"
+   "color": "#f3827f"
   },
   {
    "name": "Sala Eventbrite",
    "url": "https://pycones19.sched.com/overview/type/Sala+Eventbrite?iframe=yes&w=100%&sidebar=yes&bg=no",
-   "color": "grey"
+   "color": "#9edf7d"
   },
   {
    "name": "Sala Ilion Animation",
@@ -327,7 +327,7 @@
   {
    "name": "Taller 1 - Viernes",
    "url": "https://pycones19.sched.com/overview/type/Taller+1+-+Viernes?iframe=yes&w=100%&sidebar=yes&bg=no",
-   "color": "red"
+   "color": "#b7cdff"
   },
   {
    "name": "Taller 2",

@@ -1,24 +1,27 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
-import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
-import { Text } from 'react-native-paper'
+import { ScrollView, StyleSheet } from 'react-native'
+import { Text, useTheme } from 'react-native-paper'
 // import { useSafeArea } from 'react-native-safe-area-context'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { getSessions } from '../redux/actions'
-import { Session, StackParamList } from '../types'
-import { filterSessionsByDate } from './SessionsListInteractor'
+import { getSessions, getTypes } from '../redux/actions'
+import { Session, StackParamList, Type } from '../types'
+import SessionOverview from './SessionOverview'
+import { filterSessionsByDate, getSessionColor } from './SessionsListInteractor'
 
-const mapStateToProps = (state: { sessions: Session[]; dates: string[] }) => {
+const mapStateToProps = (state: { sessions: Session[]; dates: string[]; types: Type[] }) => {
   return {
     sessions: state.sessions,
     dates: state.dates,
+    types: state.types,
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     getSessions: () => dispatch(getSessions()),
+    getTypes: () => dispatch(getTypes()),
   }
 }
 
@@ -26,30 +29,40 @@ interface Props {
   navigation?: StackNavigationProp<StackParamList>
   dates: string[]
   sessions: Session[]
+  types: Type[]
 
   getSessions(): void
+  getTypes(): void
 }
 
 const SessionList: React.FunctionComponent<Props> = props => {
   useEffect(() => {
     props.getSessions()
+    props.getTypes()
   }, [])
+  const theme = useTheme()
 
   return (
     <ScrollView>
       {props.dates.map((date, idx) => {
         return (
           <React.Fragment key={idx + date.replace(' ', '_')}>
-            <Text style={styles.date} key={date}>
+            <Text
+              key={date}
+              style={[
+                styles.date,
+                { backgroundColor: theme.colors.primary, color: theme.colors.surface },
+              ]}
+            >
               {date}
             </Text>
             {filterSessionsByDate(props.sessions, date).map((session, idx) => (
-              <TouchableOpacity
+              <SessionOverview
                 key={idx}
+                typeColor={getSessionColor(props.types, session.type)}
+                session={session}
                 onPress={() => props.navigation.push('SessionDetails', { session })}
-              >
-                <Text>{session.name}</Text>
-              </TouchableOpacity>
+              />
             ))}
           </React.Fragment>
         )
@@ -63,5 +76,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(SessionList)
 const styles = StyleSheet.create({
   date: {
     fontWeight: 'bold',
+    padding: 10,
   },
 })

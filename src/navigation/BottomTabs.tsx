@@ -1,4 +1,5 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import color from 'color'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 import AppInfo from '../info/AppInfo'
@@ -9,7 +10,6 @@ const Tab = createMaterialBottomTabNavigator()
 export const BottomTabs = () => {
   const theme = useTheme()
   const tabBarColor = theme.colors.surface
-  // theme.dark ? (overlay(6, theme.colors.surface) as string) : theme.colors.surface
 
   return (
     <Tab.Navigator
@@ -17,13 +17,7 @@ export const BottomTabs = () => {
       backBehavior="initialRoute"
       shifting={true}
       activeColor={theme.colors.primary}
-      inactiveColor={
-        theme.colors.text
-        /* color(theme.colors.text)
-        .alpha(0.6)
-        .rgb()
-        .string() */
-      }
+      inactiveColor={color(theme.colors.text).alpha(0.6).rgb().string()}
       sceneAnimationEnabled={false}
     >
       <Tab.Screen
