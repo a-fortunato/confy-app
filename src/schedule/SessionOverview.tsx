@@ -14,25 +14,24 @@ interface Props {
 
 const SessionOverview: React.FunctionComponent<Props> = ({ typeColor, session, onPress }) => {
   return (
-    <View style={styles.sessionContainer}>
-      <Text
-        style={[
-          styles.sessionDate,
-          { backgroundColor: typeColor && color(typeColor).lighten(0.1) },
-        ]}
-      >
-        {session.time}
-      </Text>
-      <TouchableOpacity
-        onPress={onPress}
-        style={[styles.sessionSummary, { backgroundColor: typeColor }]}
-      >
+    <TouchableOpacity onPress={onPress} style={styles.sessionContainer}>
+      <View style={styles.sessionContainer}>
+        <Text
+          style={[
+            styles.sessionDate,
+            { backgroundColor: typeColor && color(typeColor).lighten(0.1) },
+          ]}
+        >
+          {session.time}
+        </Text>
+      </View>
+      <View style={[styles.sessionSummary, { backgroundColor: typeColor }]}>
         <Text style={[styles.sessionText, styles.sessionTitle]}>{session.name}</Text>
         <Text style={styles.sessionText}>{session.place}</Text>
         {/* session.speaker && <Text>{`Speakers: ${session.speaker}`}</Text> */}
         <SessionTypeTag type={session.type} />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   )
 }
 

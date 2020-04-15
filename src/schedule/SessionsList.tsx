@@ -56,14 +56,17 @@ const SessionList: React.FunctionComponent<Props> = props => {
             >
               {date}
             </Text>
-            {filterSessionsByDate(props.sessions, date).map((session, idx) => (
-              <SessionOverview
-                key={idx}
-                typeColor={getSessionColor(props.types, session.type)}
-                session={session}
-                onPress={() => props.navigation.push('SessionDetails', { session })}
-              />
-            ))}
+            {filterSessionsByDate(props.sessions, date).map((session, idx) => {
+              const color = getSessionColor(props.types, session.type)
+              return (
+                <SessionOverview
+                  key={idx}
+                  typeColor={color}
+                  session={session}
+                  onPress={() => props.navigation.push('SessionDetails', { session, color })}
+                />
+              )
+            })}
           </React.Fragment>
         )
       })}

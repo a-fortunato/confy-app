@@ -1,11 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
+import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack'
+import React, { ReactElement } from 'react'
 import { Appbar, useTheme } from 'react-native-paper'
 import SessionDetails from '../schedule/SessionDetails'
+import SessionTypeTag from '../schedule/SessionTypeTag'
 import { StackParamList } from '../types'
 import { BottomTabs } from './BottomTabs'
 
 const Stack = createStackNavigator<StackParamList>()
+
+interface Options extends StackNavigationOptions {
+  subtitle: string | ReactElement
+}
 
 export default function StackNavigator() {
   const theme = useTheme()
@@ -23,6 +28,7 @@ export default function StackNavigator() {
               : options.title !== undefined
               ? options.title
               : scene.route.name
+          const subtitle = (options as Options).subtitle
 
           return (
             <Appbar.Header theme={{ colors: { primary: theme.colors.surface } }}>
@@ -36,6 +42,7 @@ export default function StackNavigator() {
                   // fontWeight: 'bold',
                   color: theme.colors.primary,
                 }}
+                subtitle={subtitle}
               />
             </Appbar.Header>
           )
@@ -58,6 +65,7 @@ export default function StackNavigator() {
         component={SessionDetails}
         options={({ route }) => ({
           title: route.params.session.name,
+          subtitle: <SessionTypeTag type={route.params.session.type} />,
         })}
       />
     </Stack.Navigator>
