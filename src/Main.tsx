@@ -5,6 +5,7 @@ import { Provider as StoreProvider } from 'react-redux'
 import { createStore } from 'redux'
 import { RootNavigator } from './navigation/RootNavigator'
 import reducer from './redux/reducer'
+import { UserProvider } from './user/UserProvider'
 
 const store = createStore(reducer)
 
@@ -30,7 +31,9 @@ export default function Main() {
     <StoreProvider store={store}>
       <PaperProvider>
         <SafeAreaProvider>
-          <RootNavigator />
+          <UserProvider>
+            <RootNavigator />
+          </UserProvider>
         </SafeAreaProvider>
       </PaperProvider>
     </StoreProvider>

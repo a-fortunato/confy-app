@@ -24,6 +24,8 @@
     "@react-navigation/stack": "^5.2.10",
     "color": "^3.1.2",
     "expo": "^37.0.0",
+    "expo-constants": "~9.0.0",
+    "expo-google-app-auth": "^8.1.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
@@ -46,7 +48,7 @@
     "eslint": "^6.8.0",
     "eslint-config-universe": "^3.0.0",
     "eslint-plugin-react-native": "^3.8.1",
-    "expo-cli": "^3.18.0",
+    "expo-cli": "^3.21.3",
     "prettier": "^2.0.4",
     "typescript": "^3.8.3"
   },

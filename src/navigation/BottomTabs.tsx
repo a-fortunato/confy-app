@@ -3,11 +3,15 @@ import color from 'color'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 import AppInfo from '../info/AppInfo'
+import LogInScreen from '../oauth/LogInScreen'
 import SessionsList from '../schedule/SessionsList'
+import AccountInfo from '../user/AccountInfo'
+import { useUserContext } from '../user/UserProvider'
 
 const Tab = createMaterialBottomTabNavigator()
 
 export const BottomTabs = () => {
+  const { user } = useUserContext()
   const theme = useTheme()
   const tabBarColor = theme.colors.surface
 
@@ -38,7 +42,7 @@ export const BottomTabs = () => {
       />
       <Tab.Screen
         name="My Account"
-        component={AppInfo}
+        component={user ? AccountInfo : LogInScreen}
         options={{
           tabBarIcon: 'settings',
           tabBarColor,

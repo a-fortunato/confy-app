@@ -1,4 +1,3 @@
-import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
@@ -6,7 +5,7 @@ import { Text, useTheme } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { getSessions, getTypes } from '../redux/actions'
-import { Session, StackParamList, Type } from '../types'
+import { Session, SessionsListNavigationProp, SessionsListRouteProp, Type } from '../types'
 import SessionOverview from './SessionOverview'
 import { filterSessionsByDate, getSessionColor } from './SessionsListInteractor'
 
@@ -26,7 +25,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 interface Props {
-  navigation?: StackNavigationProp<StackParamList>
+  navigation: SessionsListNavigationProp
+  route: SessionsListRouteProp
   dates: string[]
   sessions: Session[]
   types: Type[]

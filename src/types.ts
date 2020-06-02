@@ -1,3 +1,6 @@
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+
 export interface Session {
   name: string // title
   url: string
@@ -41,6 +44,7 @@ export interface Web {
   url: string
 }
 
+// Navigation types
 export type StackParamList = {
   SessionsList: undefined
   SessionDetails: {
@@ -48,3 +52,9 @@ export type StackParamList = {
     color?: string
   }
 }
+
+export type SessionsListRouteProp = RouteProp<StackParamList, 'SessionsList'>
+export type SessionsListNavigationProp = StackNavigationProp<StackParamList, 'SessionsList'>
+
+export type SessionDetailsRouteProp = RouteProp<StackParamList, 'SessionDetails'>
+export type SessionDetailsNavigationProp = StackNavigationProp<StackParamList, 'SessionDetails'>
