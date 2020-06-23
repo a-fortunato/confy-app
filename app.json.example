@@ -21,7 +21,9 @@
     },
     "extra": {
       "androidGoogleClientId": "<add here your Android's Google OAuth Client ID>",
-      "iosGoogleClientId": "<add here your iOS's Google OAuth Client ID>"
+      "iosGoogleClientId": "<add here your iOS's Google OAuth Client ID>",
+      "hostUri": "localhost",
+      "releaseChannel": "local"
     },
     "assetBundlePatterns": [
       "**/*"

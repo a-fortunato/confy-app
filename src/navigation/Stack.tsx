@@ -1,9 +1,9 @@
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack'
 import React, { ReactElement } from 'react'
 import { Appbar, useTheme } from 'react-native-paper'
-import SessionDetails from '../schedule/SessionDetails'
-import SessionTypeTag from '../schedule/SessionTypeTag'
-import { StackParamList } from '../types'
+import SessionDetails from '../sessions/SessionDetails'
+import SessionTypeTag from '../sessions/SessionTypeTag'
+import { StackParamList } from '../sessions/types'
 import { BottomTabs } from './BottomTabs'
 
 const Stack = createStackNavigator<StackParamList>()
@@ -64,8 +64,8 @@ export default function StackNavigator() {
         name="SessionDetails"
         component={SessionDetails}
         options={({ route }) => ({
-          title: route.params.session.name,
-          subtitle: <SessionTypeTag type={route.params.session.type} />,
+          title: route.params.session.title,
+          subtitle: <SessionTypeTag typeName={route.params.session.type.name} />,
         })}
       />
     </Stack.Navigator>

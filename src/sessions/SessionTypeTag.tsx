@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 
 interface Props {
-  type: string
+  typeName: string
 }
 
-const SessionTypeTag: React.FunctionComponent<Props> = ({ type }) => {
-  if (!type) return null
+const SessionTypeTag: React.FunctionComponent<Props> = ({ typeName }) => {
+  if (!typeName) return null
 
   const theme = useTheme()
   return (
@@ -17,7 +17,7 @@ const SessionTypeTag: React.FunctionComponent<Props> = ({ type }) => {
         { backgroundColor: theme.colors.disabled, color: theme.colors.surface },
       ]}
     >
-      {type}
+      {typeName}
     </Text>
   )
 }

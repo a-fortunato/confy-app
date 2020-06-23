@@ -4,9 +4,9 @@ import React from 'react'
 import { useTheme } from 'react-native-paper'
 import AppInfo from '../info/AppInfo'
 import LogInScreen from '../oauth/LogInScreen'
-import SessionsList from '../schedule/SessionsList'
+import SessionsList from '../sessions/SessionsList'
+import { useUserContext } from '../user'
 import AccountInfo from '../user/AccountInfo'
-import { useUserContext } from '../user/UserProvider'
 
 const Tab = createMaterialBottomTabNavigator()
 

@@ -1,14 +1,40 @@
+import { createOffline } from '@redux-offline/redux-offline'
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults'
 import React from 'react'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider as StoreProvider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import rootReducer from './baseReducer'
 import { RootNavigator } from './navigation/RootNavigator'
-import reducer from './redux/reducer'
-import { UserProvider } from './user/UserProvider'
+import { default as sessionsReducer } from './sessions/redux/reducer'
+import { UserProvider } from './user'
 
-const store = createStore(reducer)
+const reduxOfflineConfig = {
+  ...offlineConfig,
+  rehydrate: true,
+  persistOptions: { whitelist: ['schedule'] },
+}
+const { enhanceReducer, middleware, enhanceStore } = createOffline(reduxOfflineConfig)
 
+const store = createStore(
+  //rootReducer(combinedReducers, console.error),
+  rootReducer(enhanceReducer(sessionsReducer), console.error),
+  undefined,
+  compose(applyMiddleware(thunk, middleware), enhanceStore)
+)
+
+/*
+if (module.hot) {
+  // Enable Webpack hot module replacement for reducers
+  module.hot.accept('./reducer', () => {
+    const nextReducer = require('./reducer');
+    this.store.replaceReducer(nextReducer);
+  });
+}
+this.refreshAction = refreshAccessAction;
+*/
 /*
 Theme Customization:
 

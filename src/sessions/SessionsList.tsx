@@ -4,12 +4,13 @@ import { Text, useTheme } from 'react-native-paper'
 // import { useSafeArea } from 'react-native-safe-area-context'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { getSessions, getTypes } from '../redux/actions'
-import { Session, SessionsListNavigationProp, SessionsListRouteProp, Type } from '../types'
 import SessionOverview from './SessionOverview'
-import { filterSessionsByDate, getSessionColor } from './SessionsListInteractor'
+import { filterSessionsByDate } from './SessionsListInteractor'
+import { getSessions, getTypes } from './redux/actions'
+import { SessionsState } from './redux/reducer'
+import { Session, SessionsListNavigationProp, SessionsListRouteProp, Type } from './types'
 
-const mapStateToProps = (state: { sessions: Session[]; dates: string[]; types: Type[] }) => {
+const mapStateToProps = (state: SessionsState) => {
   return {
     sessions: state.sessions,
     dates: state.dates,
@@ -41,12 +42,13 @@ const SessionList: React.FunctionComponent<Props> = props => {
     props.getTypes()
   }, [])
   const theme = useTheme()
+  console.log('sessions', props)
 
   return (
     <ScrollView>
       {props.dates.map((date, idx) => {
         return (
-          <React.Fragment key={idx + date.replace(' ', '_')}>
+          <React.Fragment key={idx + date}>
             <Text
               key={date}
               style={[
@@ -57,7 +59,7 @@ const SessionList: React.FunctionComponent<Props> = props => {
               {date}
             </Text>
             {filterSessionsByDate(props.sessions, date).map((session, idx) => {
-              const color = getSessionColor(props.types, session.type)
+              const color = session.type.color
               return (
                 <SessionOverview
                   key={idx}

@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from 'react'
+import React from 'react'
 import { Text } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { getTypes } from '../redux/actions'
-import { Type } from '../types'
 import DetailsDivider from './DetailsDivider'
 import TypeItem from './TypeItem'
+import { getTypes } from './redux/actions'
+import { Type } from './types'
 
 const mapStateToProps = (state: { types: Type[] }) => {
   return {
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 interface Props {
-  typeName: string
+  type: Type
   types: Type[]
 
   getTypes(): void
@@ -28,20 +28,20 @@ interface Props {
 
 const typeTitle = 'Type'
 const SessionTypeSection: React.FunctionComponent<Props> = props => {
-  const { typeName, types } = props
-  if (!typeName) return null
-  const foundType = useMemo(() => types.find(type => type.name === typeName), [])
-  useEffect(() => {
-    if (!types.length || !foundType) {
-      props.getTypes()
-    }
-  }, [foundType, types])
+  const { type } = props
+  if (!type) return null
+  // const foundType = useMemo(() => types.find(type => type.name === typeName), [])
+  // useEffect(() => {
+  //   if (!types.length || !type) {
+  //     props.getTypes()
+  //   }
+  // }, [foundType, types])
 
   return (
     <>
       <DetailsDivider />
       <Text>{typeTitle}</Text>
-      <TypeItem name={typeName} color={foundType.color} />
+      <TypeItem name={type.name} color={type.color} />
     </>
   )
 }
