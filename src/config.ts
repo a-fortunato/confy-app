@@ -46,9 +46,12 @@ function getRoute(path: string): string {
   return getHost() + path
 }
 
+const APP_VERSION = ExpoConstants.manifest.version
+
 export default {
   releaseChannel: CHANNEL,
   mode: MODE,
+  version: APP_VERSION,
   isLocal,
   isDev,
   isProd,

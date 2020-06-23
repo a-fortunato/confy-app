@@ -2,51 +2,33 @@ import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
 // import { useSafeArea } from 'react-native-safe-area-context'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { useDispatch, useSelector } from 'react-redux'
 import SessionOverview from './SessionOverview'
 import { filterSessionsByDate } from './SessionsListInteractor'
 import { getSessions, getTypes } from './redux/actions'
-import { SessionsState } from './redux/reducer'
+import { datesSelector, formattedSessionsSelector } from './redux/selectors'
 import { Session, SessionsListNavigationProp, SessionsListRouteProp, Type } from './types'
-
-const mapStateToProps = (state: SessionsState) => {
-  return {
-    sessions: state.sessions,
-    dates: state.dates,
-    types: state.types,
-  }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    getSessions: () => dispatch(getSessions()),
-    getTypes: () => dispatch(getTypes()),
-  }
-}
 
 interface Props {
   navigation: SessionsListNavigationProp
   route: SessionsListRouteProp
-  dates: string[]
   sessions: Session[]
   types: Type[]
-
-  getSessions(): void
-  getTypes(): void
 }
 
 const SessionList: React.FunctionComponent<Props> = props => {
+  const dispatch = useDispatch()
   useEffect(() => {
-    props.getSessions()
-    props.getTypes()
+    dispatch(getSessions())
+    dispatch(getTypes())
   }, [])
   const theme = useTheme()
-  console.log('sessions', props)
+  const sessions = useSelector(formattedSessionsSelector)
+  const dates = useSelector(datesSelector)
 
   return (
     <ScrollView>
-      {props.dates.map((date, idx) => {
+      {dates.map((date, idx) => {
         return (
           <React.Fragment key={idx + date}>
             <Text
@@ -58,14 +40,21 @@ const SessionList: React.FunctionComponent<Props> = props => {
             >
               {date}
             </Text>
-            {filterSessionsByDate(props.sessions, date).map((session, idx) => {
+            {filterSessionsByDate(sessions, date).map((session, idx) => {
               const color = session.type.color
               return (
                 <SessionOverview
                   key={idx}
                   typeColor={color}
                   session={session}
-                  onPress={() => props.navigation.push('SessionDetails', { session, color })}
+                  onPress={() =>
+                    props.navigation.push('SessionDetails', {
+                      title: session.title,
+                      type: session.type.name,
+                      sessionId: session.id,
+                      color,
+                    })
+                  }
                 />
               )
             })}
@@ -76,7 +65,7 @@ const SessionList: React.FunctionComponent<Props> = props => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SessionList)
+export default SessionList
 
 const styles = StyleSheet.create({
   date: {

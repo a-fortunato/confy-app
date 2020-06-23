@@ -26,7 +26,12 @@ const SessionOverview: React.FunctionComponent<Props> = ({ typeColor, session, o
           {getTimeString(session.startsAt) + ' - ' + getTimeString(session.endsAt)}
         </Text>
       </View>
-      <View style={[styles.sessionSummary, { backgroundColor: typeColor }]}>
+      <View
+        style={[
+          styles.sessionSummary,
+          { backgroundColor: typeColor && color(typeColor).lighten(0.4) },
+        ]}
+      >
         <Text style={[styles.sessionText, styles.sessionTitle]}>{session.title}</Text>
         {session.venue && <Text style={styles.sessionText}>{session.venue}</Text>}
         {/* session.speaker && <Text>{`Speakers: ${session.speaker}`}</Text> */}

@@ -63,10 +63,12 @@ export default function StackNavigator() {
       <Stack.Screen
         name="SessionDetails"
         component={SessionDetails}
-        options={({ route }) => ({
-          title: route.params.session.title,
-          subtitle: <SessionTypeTag typeName={route.params.session.type.name} />,
-        })}
+        options={({ route }) => {
+          return {
+            title: route.params.title,
+            subtitle: <SessionTypeTag typeName={route.params.type} />,
+          }
+        }}
       />
     </Stack.Navigator>
   )

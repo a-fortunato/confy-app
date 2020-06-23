@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import GoogleLogInButton from '../oauth/GoogleLogInButton'
 import { useUserContext } from '../user'
 import { getDateString, getTimeString } from './DateParser'
@@ -8,7 +9,8 @@ import JoinSessionButton from './JoinSessionButton'
 import SessionDescriptionSection from './SessionDescriptionSection'
 import SessionSpeakerSection from './SessionSpeakerSection'
 import SessionTypeSection from './SessionTypeSection'
-import { Session, SessionDetailsNavigationProp, SessionDetailsRouteProp } from './types'
+import { formattedSessionsSelector } from './redux/selectors'
+import { SessionDetailsNavigationProp, SessionDetailsRouteProp } from './types'
 
 interface SessionRouteProps {
   route: SessionDetailsRouteProp
@@ -16,25 +18,28 @@ interface SessionRouteProps {
 }
 
 const SessionDetailsPresenter: React.FunctionComponent<SessionRouteProps> = ({ route }) => {
-  return <SessionDetails session={route.params.session} />
+  return <SessionDetails sessionId={route.params.sessionId} />
 }
 
 interface Props {
-  session: Session
+  sessionId: string
 }
 
-const SessionDetails: React.FunctionComponent<Props> = ({ session }) => {
+const SessionDetails: React.FunctionComponent<Props> = ({ sessionId }) => {
   const { user } = useUserContext()
+  const allSessions = useSelector(formattedSessionsSelector)
+  const session = allSessions.find(sess => sess.id === sessionId)
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.dateContainer}>
           <Text>{getDateString(session.startsAt)}</Text>
-          <Text>{getTimeString(session.startsAt) + '-' + getTimeString(session.endsAt)}</Text>
+          <Text>{getTimeString(session.startsAt) + ' - ' + getTimeString(session.endsAt)}</Text>
         </View>
-        {session.venue && <Text>{session.venue}</Text>}
-        {session.speaker.length && <SessionSpeakerSection speakerName={session.speaker} />}
-        {session.description && <SessionDescriptionSection description={session.description} />}
+        {!!session.venue && <Text>{session.venue}</Text>}
+        {!!session.speaker.length && <SessionSpeakerSection speakerName={session.speaker} />}
+        {!!session.description && <SessionDescriptionSection description={session.description} />}
         <SessionTypeSection type={session.type} />
       </ScrollView>
       {user ? <JoinSessionButton /> : <GoogleLogInButton />}

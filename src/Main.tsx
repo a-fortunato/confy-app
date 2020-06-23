@@ -13,14 +13,14 @@ import { UserProvider } from './user'
 
 const reduxOfflineConfig = {
   ...offlineConfig,
-  rehydrate: true,
-  persistOptions: { whitelist: ['schedule'] },
+  // rehydrate: true,
+  // persistOptions: { whitelist: ['schedule'] },
 }
 const { enhanceReducer, middleware, enhanceStore } = createOffline(reduxOfflineConfig)
 
 const store = createStore(
   //rootReducer(combinedReducers, console.error),
-  rootReducer(enhanceReducer(sessionsReducer), console.error),
+  rootReducer(enhanceReducer(sessionsReducer)),
   undefined,
   compose(applyMiddleware(thunk, middleware), enhanceStore)
 )

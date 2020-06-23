@@ -46,7 +46,9 @@ export interface Web {
 export type StackParamList = {
   SessionsList: undefined
   SessionDetails: {
-    session: Session
+    sessionId: string
+    title: string
+    type: string
     color?: string
   }
 }
