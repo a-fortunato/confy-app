@@ -2,8 +2,9 @@ import color from 'color'
 import React from 'react'
 import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { Session } from '../types'
+import { getTimeString } from './DateParser'
 import SessionTypeTag from './SessionTypeTag'
+import { Session } from './types'
 
 interface Props {
   session: Session
@@ -22,14 +23,19 @@ const SessionOverview: React.FunctionComponent<Props> = ({ typeColor, session, o
             { backgroundColor: typeColor && color(typeColor).lighten(0.1) },
           ]}
         >
-          {session.time}
+          {getTimeString(session.startsAt) + ' - ' + getTimeString(session.endsAt)}
         </Text>
       </View>
-      <View style={[styles.sessionSummary, { backgroundColor: typeColor }]}>
-        <Text style={[styles.sessionText, styles.sessionTitle]}>{session.name}</Text>
-        <Text style={styles.sessionText}>{session.place}</Text>
+      <View
+        style={[
+          styles.sessionSummary,
+          { backgroundColor: typeColor && color(typeColor).lighten(0.4) },
+        ]}
+      >
+        <Text style={[styles.sessionText, styles.sessionTitle]}>{session.title}</Text>
+        {session.venue && <Text style={styles.sessionText}>{session.venue}</Text>}
         {/* session.speaker && <Text>{`Speakers: ${session.speaker}`}</Text> */}
-        <SessionTypeTag type={session.type} />
+        <SessionTypeTag typeName={session.type.name} />
       </View>
     </TouchableOpacity>
   )

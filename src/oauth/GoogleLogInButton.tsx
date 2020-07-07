@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from 'react-native-paper'
-import { OAuthProvider, User, useUserContext } from '../user/UserProvider'
+import { OAuthProvider, User, useUserContext } from '../user'
 import { GoogleLogInResult, signInWithGoogleAsync } from './GoogleAuth'
 
 interface Props {}

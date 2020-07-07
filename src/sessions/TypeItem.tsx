@@ -4,10 +4,10 @@ import { Badge, Text } from 'react-native-paper'
 
 interface Props {
   name: string
-  color: string
+  color?: string
 }
 
-const TypeItem: React.FunctionComponent<Props> = ({ name, color }) => {
+const TypeItem: React.FunctionComponent<Props> = ({ name, color = 'rgba(255,255,255,0.3)' }) => {
   return (
     <View style={styles.container}>
       <View style={styles.badgeContainer}>

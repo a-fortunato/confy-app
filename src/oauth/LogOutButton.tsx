@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from 'react-native-paper'
-import { useUserContext } from '../user/UserProvider'
+import { useUserContext } from '../user'
 
 interface Props {
   logOut(accessToken: string): void
