@@ -1,11 +1,12 @@
 import Config from '../../config'
 import data from '../../tests/test_data.json'
-import { GET_ATTENDEES, GET_SESSIONS, GET_SPEAKERS, GET_TYPES } from './action-types'
+import { GET_ATTENDEES, GET_EVENTS, GET_SESSIONS, GET_SPEAKERS, GET_TYPES } from './action-types'
 
 export const SESSIONS = '/sessions'
 export const PEOPLE = '/people'
 export const SPEAKERS = '/speakers'
 export const TYPES = '/types'
+export const EVENTS = '/events'
 
 export function getSessions() {
   return {
@@ -54,6 +55,28 @@ export function getAttendees() {
   return {
     type: GET_ATTENDEES,
     payload: data.attendees || [],
+  }
+}
+
+export function getEvents() {
+  return {
+    type: GET_EVENTS,
+    meta: {
+      offline: {
+        effect: {
+          url: Config.getRoute(EVENTS),
+          method: 'GET',
+        },
+        commit: {
+          type: GET_EVENTS,
+          success: true,
+        },
+        rollback: {
+          type: GET_EVENTS,
+          error: true,
+        },
+      },
+    },
   }
 }
 

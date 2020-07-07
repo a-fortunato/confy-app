@@ -13,6 +13,16 @@ export interface Session {
   description?: string
 }
 
+export interface Event {
+  _id: string
+  name: string
+  startingDate: Date
+  endingDate: Date
+  venue?: string
+  organization?: string
+  city: string
+}
+
 export interface Type {
   name: string
   color?: string
