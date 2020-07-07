@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git://github.com/a-fortunato/confy-app.git"
   },
-  "license": "GPL",
+  "license": "GPL-3.0-or-later",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start -c",
